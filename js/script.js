@@ -36,6 +36,18 @@ if (bentoSlideshow) {
   }, 3000);
 }
 
+// ===================== FORZAR PLAY DE VIDEOS DE FONDO =====================
+// Algunos celulares (modo ahorro de batería/datos) ignoran el autoplay nativo.
+const bgVideos = document.querySelectorAll('.team-intro-video, .about-video video');
+const bgVideoObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.play().catch(() => {});
+    }
+  });
+}, { threshold: 0.25 });
+bgVideos.forEach(v => bgVideoObserver.observe(v));
+
 // ===================== CARRUSEL "NUESTRO TRABAJO" =====================
 // Para sumar videos, agregá un objeto { src, label } a esta lista.
 const workVideos = [
